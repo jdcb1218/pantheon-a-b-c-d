@@ -15,7 +15,7 @@ jobs:
 
       - name: Install Terminus
         run: |
-          curl -L https://pantheon.io/terminus.phar -o terminus
+          curl -L https://github.com/pantheon-systems/terminus/releases/latest/download/terminus.phar -o terminus
           chmod +x terminus
           sudo mv terminus /usr/local/bin/terminus
           terminus --version   # Verificamos que quedó instalado
