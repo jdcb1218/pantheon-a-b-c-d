@@ -25,6 +25,13 @@ jobs:
         env:
           PANTHEON_MACHINE_TOKEN: ${{ secrets.PANTHEON_MACHINE_TOKEN }}
 
+      - name: Configure SSH for Pantheon
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.PANTHEON_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p 2222 codeserver.dev.91b1e4b4-cf57-47f8-8068-18eff979e655.drush.in >> ~/.ssh/known_hosts
+
       - name: Push code to Pantheon
         run: |
           terminus connection:set example-abcde.dev git
