@@ -15,9 +15,10 @@ jobs:
 
       - name: Install Terminus
         run: |
-          curl -L https://github.com/pantheon-systems/terminus/releases/download/3.0.0/terminus.phar -o terminus
+          curl -L https://pantheon.io/terminus.phar -o terminus
           chmod +x terminus
           sudo mv terminus /usr/local/bin/terminus
+          terminus --version   # Verificamos que quedó instalado
 
       - name: Authenticate Terminus
         run: terminus auth:login --machine-token=$PANTHEON_MACHINE_TOKEN
@@ -27,5 +28,6 @@ jobs:
       - name: Push code to Pantheon
         run: |
           terminus connection:set example-abcde.dev git
+          git remote remove pantheon || true
           git remote add pantheon $(terminus connection:info example-abcde.dev --field=git_url)
           git push pantheon main:master --force
